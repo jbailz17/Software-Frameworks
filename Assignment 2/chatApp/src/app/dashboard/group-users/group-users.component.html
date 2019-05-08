@@ -1,0 +1,30 @@
+<div id="dialog">
+  <div fxLayout="column" fxLayoutAlign="start none">
+    <h3 style="text-align: center;">{{groupName}} Members</h3>
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          Group Access
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null" 
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+    </mat-table>
+    <mat-dialog-actions style="text-align: center;">
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit()">Save Changes</button>
+      <button mat-raised-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</div>
+

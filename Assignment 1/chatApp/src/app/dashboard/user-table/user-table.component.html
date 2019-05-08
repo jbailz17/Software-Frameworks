@@ -1,0 +1,54 @@
+<mat-card>
+  <div fxLayout="column" fxLayoutAlign="start none">
+    <mat-card-title style="text-align: center;">ChatApp Users</mat-card-title>
+    <mat-card-content>
+      <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="user">
+          <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="group">
+          <mat-header-cell *matHeaderCellDef>
+            Group Admin
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? toggleGroup(row) : null" 
+              [checked]="groupAdmin.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="super">
+          <mat-header-cell *matHeaderCellDef>
+            Super Admin
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox
+              [disabled]="!isSuper"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? toggleSuper(row) : null" 
+              [checked]="superAdmin.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-icon-button (click)="deleteUser(row)">
+                  <mat-icon style="color: red;">delete_forever</mat-icon>
+              </button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </mat-card-content>
+    <mat-card-actions style="text-align: center;">
+      <button mat-raised-button color="primary" type="button" (click)="openAddUser()"><mat-icon>add</mat-icon> Add User</button>
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit()"><mat-icon>save</mat-icon> Save Changes</button>
+      <button mat-raised-button color="warn" type="button" (click)="close()">Close</button>
+    </mat-card-actions>
+  </div>
+</mat-card>
+

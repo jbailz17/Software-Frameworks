@@ -1,0 +1,20 @@
+<div id="dialog" fxLayout="column" fxLayoutAlign="start center">
+  <h3>Add New Channel</h3>
+  <form #addChannelForm="ngForm" (submit)="onSubmit($event)" fxLayout="column" fxLayoutAlign="start center">
+  <mat-dialog-content fxLayout="column" fxLayoutAlign="start center">
+      <mat-form-field>
+        <input matInput placeholder="Channel Name" name="groupName" [(ngModel)]="channelName" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Users" name="addedUsers" [(ngModel)]="addedUsers" multiple required>
+          <mat-option *ngFor="let user of users" [value]="user">{{ user.username }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!addChannelForm.valid">Add Channel</button>
+      <button mat-raised-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </mat-dialog-actions>
+  </form> 
+</div>
+

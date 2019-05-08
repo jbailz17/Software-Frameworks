@@ -1,0 +1,23 @@
+<div id="dialog" fxLayout="column" fxLayoutAlign="start center">
+  <h3>Create New User</h3>
+  <form #addUserForm="ngForm"(submit)="onSubmit($event)" fxLayout="column" fxLayoutAlign="start center">
+  <mat-dialog-content fxLayout="column" fxLayoutAlign="start center">
+      <mat-form-field>
+        <input matInput placeholder="Username" name="username" [(ngModel)]="username" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" name="email" [(ngModel)]="email" required email>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Access" name="access" [(ngModel)]="access" required>
+          <mat-option *ngFor="let accessLevel of accessLevels" [value]="accessLevel">{{accessLevel}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!addUserForm.valid">Add User</button>
+      <button mat-raised-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </mat-dialog-actions>
+  </form> 
+</div>
+

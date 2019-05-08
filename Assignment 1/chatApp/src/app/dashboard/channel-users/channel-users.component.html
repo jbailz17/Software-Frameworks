@@ -1,0 +1,36 @@
+<div id="dialog">
+  <div *ngIf="groupUsers.length == 0" fxLayout="column" fxLayoutAlign="center center">
+    <h3 style="color: red;">No Users To Add</h3>
+    <mat-dialog-actions>
+      <button mat-raised-button color="warn" (click)="dialogRef.close(false)">Close</button>
+    </mat-dialog-actions>
+  </div>
+  <div *ngIf="groupUsers.length > 0" fxLayout="column" fxLayoutAlign="start none">
+    <h3 style="text-align: center;">{{channelName}} Members</h3>
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          Channel Access
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null" 
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+    </mat-table>
+    <mat-dialog-actions style="text-align: center;">
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit()">Save Changes</button>
+      <button mat-raised-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</div>
+

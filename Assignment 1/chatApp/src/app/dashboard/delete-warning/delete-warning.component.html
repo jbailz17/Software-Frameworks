@@ -1,0 +1,10 @@
+<div id="dialog">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h3>Are you sure you want to delete {{item}}?</h3>
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" type="button" (click)="dialogRef.close(true)">Delete</button>
+      <button mat-raised-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</div>
+

@@ -1,0 +1,52 @@
+<div id="channel" fxLayout="row" fxLayoutAlign="start stretch">
+  <div id="sidebar" fxFlex="20">
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5%">
+        <mat-nav-list>
+          <mat-list-item>
+              <a style="color: white;" routerLink="../../../dashboard"><mat-icon>arrow_back</mat-icon> Dashboard</a>
+          </mat-list-item>
+        </mat-nav-list>
+        <mat-list *ngIf="users" style="width: 100%">
+          <h3 align="center">Channel Users</h3>
+          <mat-list-item *ngFor="let user of users">
+            <p style="color: white;">
+              <mat-icon *ngIf="user.access == 'super-admin' || user.access == 'group-admin'">verified_user</mat-icon> 
+              <mat-icon *ngIf="user.access == 'user'">account_circle</mat-icon>
+              {{user.username}}
+            </p>
+          </mat-list-item>
+        </mat-list>
+    </div>
+  </div>
+  <div id="chat" fxFlex="80">
+    <div fxLayout="column" fxLayoutAlign="end stretch" fxLayoutGap="5%">
+      <div align="center">
+          <h1 *ngIf="channel">{{channel.name}}</h1>
+      </div>
+      <div id="messages">
+        <div *ngFor="let message of messages" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1%">
+          <div *ngIf="message.user">
+            <img src="images/{{message.user.imagePath}}">
+          </div>
+          <div>
+            <p *ngIf="message.user">{{message.user.username}}</p>
+            <p class="messageContent">{{message.content}}</p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="message">
+        <form #messageForm="ngForm" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10%">
+          <mat-form-field fxFlex="60">
+            <input matInput placeholder="Message" name="message" [(ngModel)]="message.content" required>
+          </mat-form-field>
+          <div fxFlex="20">
+              <button mat-raised-button color="primary" type="submit" 
+                [disabled]="!messageForm.valid" (click)="sendMessage()">
+                Send <mat-icon>send</mat-icon>
+              </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

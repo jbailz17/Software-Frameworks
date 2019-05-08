@@ -1,0 +1,90 @@
+<div id="dashboard" fxLayout="column" fxLayoutAlign="start none">
+    <h1 style="text-align: center;">Dashboard</h1>
+    <div fxLayout="row" fxLayoutAlign="space-around start">
+        <mat-card fxFlex="45">
+            <div fxLayout="column" fxLayoutAlign="space-around" fxLayoutGap="5%">
+                <mat-card-title style="text-align: center;">My Groups</mat-card-title>
+                <mat-card-content>
+                    <div *ngFor="let group of groups">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>{{group.name}}</mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-nav-list>
+                                <div *ngFor="let channel of group.channels">
+                                    <mat-list-item *ngIf="channel">
+                                        <a style="vertical-align: middle;" 
+                                            matLine routerLink="../channel/{{group._id}}/{{channel.name}}">
+                                                <mat-icon style="vertical-align: middle;">bookmark</mat-icon> {{channel.name}}
+                                        </a>
+                                        <div style="width: 30%;" *ngIf="isGroupAdmin || isSuper">
+                                            <button mat-icon-button (click)="openChannelUsers(channel, group)">
+                                                <mat-icon color="primary">account_circle</mat-icon>
+                                            </button>
+                                            <button style="color: red;" mat-icon-button (click)="deleteChannel(group, channel)"> 
+                                                <mat-icon>delete_forever</mat-icon>
+                                            </button>
+                                        </div>
+                                    </mat-list-item>
+                                </div>
+                            </mat-nav-list>
+                            <mat-action-row *ngIf="isGroupAdmin || isSuper">
+                                <button mat-raised-button color="primary" (click)="openAddChannel(group)">
+                                    <mat-icon>add</mat-icon> Add Channel
+                                </button>
+                                <button mat-raised-button color="primary" (click)="openGroupUsers(group)">
+                                    <mat-icon>account_circle</mat-icon> Group Users
+                                </button>
+                                <button mat-raised-button color="warn" (click)="deleteGroup(group)">
+                                    <mat-icon>delete_forever</mat-icon> Delete Group
+                                </button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions *ngIf="isGroupAdmin || isSuper" style="text-align: center;">
+                    <button mat-raised-button color="primary" (click)="openAddGroup()">
+                        <mat-icon>add</mat-icon> Add Group
+                    </button>
+                </mat-card-actions>
+            </div>
+        </mat-card>
+        <div fxFlex="45">
+            <div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="5%">
+                <mat-card fxFlex="45">
+                    <div fxLayout="column" fxLayoutAlign="space-around">
+                        <mat-card-title style="text-align: center;">Details</mat-card-title>
+                        <mat-card-content>
+                            <img src="images\{{user.imagePath}}">
+                            <br/>
+                            <button *ngIf="!editPic" mat-raised-button color="primary" (click)="editPic = !editPic">Edit Profile Picture</button>
+                            <form *ngIf="editPic" #editPictureForm="ngForm">
+                                <input type="file" name="profileImg" (change)="fileSelected($event)" required>
+                                <br/>
+                                <br/>
+                                <button type="button" mat-raised-button color="primary" (click)="upload()">Save Profile Picture</button>
+                                <button type="button" mat-raised-button color="warn" (click)="editPic = !editPic">Cancel</button>
+                            </form>
+                            <p>Username: {{ user.username }}</p>
+                            <p>Email:{{ user.email }}</p> 
+                            <p>Access: {{ user.access }}</p>
+                        </mat-card-content>
+                    </div>
+                </mat-card>
+                <div *ngIf="isGroupAdmin || isSuper" style="text-align: center">
+                    <button 
+                        *ngIf="!panelOpened" 
+                        mat-raised-button color="accent" 
+                        style="width: 33%;"
+                        (click)="panelOpened = !panelOpened">
+                        View Users
+                    </button>
+                    <app-user-table
+                        *ngIf="panelOpened"
+                        (closeEvent)="handleClose($event)">
+                    </app-user-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

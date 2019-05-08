@@ -1,0 +1,16 @@
+<div id="login" fxLayout="column" fxLayoutAlign="center center">
+
+  <h1>Welcome to ChatApp</h1>
+
+  <mat-card fxLayout="column" fxLayoutAlign="center center">
+    <mat-card-header>Sign In</mat-card-header>
+    <mat-card-content>
+      <form (submit)="onSubmit($event)" fxLayout="column">
+          <mat-form-field>
+              <input matInput placeholder="Username" name="username" [(ngModel)]="username">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">Login</button>
+        </form>
+    </mat-card-content>
+  </mat-card>
+</div>
